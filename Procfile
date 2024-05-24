@@ -1,1 +1,1 @@
-web: streamlit run kmeans.py
+web: streamlit run Kmeans.py
