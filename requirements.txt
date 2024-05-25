@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 kneed
 pandas
 streamlit
@@ -7,14 +7,4 @@ plotly
 seaborn
 matplotlib
 scikit-learn
-=======
-kneed
-pandas
-streamlit
-numpy
-plotly
-seaborn
-matplotlib
-scikit-learn
->>>>>>> e929eb443c02a4807f44db3344206250e8973ff2
 Flask
