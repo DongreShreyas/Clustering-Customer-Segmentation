@@ -1,3 +1,3 @@
-web: gunicorn kmeans:app
+web: gunicorn Kmeans:app
 
 
