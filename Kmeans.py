@@ -9,9 +9,22 @@ from sklearn.decomposition import PCA
 from sklearn.impute import SimpleImputer
 import pickle
 import os
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.secret_key = 'supersecretkey'  # Necessary for flashing messages
+
+# Configure upload folder and allowed extensions
+UPLOAD_FOLDER = 'uploads'
+ALLOWED_EXTENSIONS = {'csv'}
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# Ensure the upload directory exists
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # Load the KMeans model from file
 def load_model():
@@ -31,9 +44,14 @@ def index():
             flash('No file selected for uploading')
             return redirect(request.url)
         
-        if file and file.filename.endswith('.csv'):
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            file.save(filepath)
+            
             try:
-                data = pd.read_csv(file)
+                data = pd.read_csv(filepath, chunksize=10000)
+                data = pd.concat(data, ignore_index=True)
             except Exception as e:
                 flash(f'Error reading CSV file: {e}')
                 return redirect(request.url)

@@ -1,34 +1,79 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>KMeans Clustering App</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cluster Analysis</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      padding-top: 20px;
+    }
+    .container {
+      max-width: 800px;
+    }
+    .result-container {
+      margin-top: 20px;
+    }
+    .data-preview {
+      margin-top: 20px;
+    }
+    .plot-container img {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
 </head>
 <body>
-    <h1>KMeans Clustering App</h1>
-    <form action="/" method="post" enctype="multipart/form-data">
-        <input type="file" name="file">
-        <label for="n_clusters">Number of clusters:</label>
-        <input type="number" name="n_clusters" value="2" min="2" max="10">
-        <button type="submit">Upload</button>
+  <div class="container">
+    <h1 class="text-center">Cluster Analysis</h1>
+    <form method="POST" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="file">Upload CSV file</label>
+        <input type="file" class="form-control-file" id="file" name="file" accept=".csv" required>
+      </div>
+      <div class="form-group">
+        <label for="n_clusters">Number of Clusters</label>
+        <input type="number" class="form-control" id="n_clusters" name="n_clusters" value="2" min="2" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+
     {% with messages = get_flashed_messages() %}
       {% if messages %}
-        <ul>
-        {% for message in messages %}
-          <li>{{ message }}</li>
-        {% endfor %}
-        </ul>
+        <div class="alert alert-warning mt-3">
+          {% for message in messages %}
+            <p>{{ message }}</p>
+          {% endfor %}
+        </div>
       {% endif %}
     {% endwith %}
+
     {% if data_preview %}
-        <h2>Data Preview</h2>
-        {{ data_preview | safe }}
-        <h3>Shape of dataset: {{ shape }}</h3>
-        <h3>Silhouette Score for {{ n_clusters }} clusters: {{ silhouette_avg }}</h3>
-        <img src="{{ img_url }}" alt="Cluster Plot">
-        <h3>Cluster Centers</h3>
-        {{ cluster_centers | safe }}
+      <div class="result-container">
+        <h2>Results</h2>
+        <h4>Data Preview</h4>
+        <div class="data-preview">
+          {{ data_preview|safe }}
+        </div>
+        <h4>Data Shape</h4>
+        <p>Rows: {{ shape[0] }}, Columns: {{ shape[1] }}</p>
+        <h4>Silhouette Score</h4>
+        <p>{{ silhouette_avg }}</p>
+        <h4>Cluster Centers</h4>
+        <div class="cluster-centers">
+          {{ cluster_centers|safe }}
+        </div>
+        <div class="plot-container mt-4">
+          <h4>Cluster Plot</h4>
+          <img src="{{ img_url }}" alt="Cluster Plot">
+        </div>
+      </div>
     {% endif %}
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
