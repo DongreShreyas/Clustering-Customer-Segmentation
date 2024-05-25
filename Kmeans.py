@@ -9,38 +9,15 @@ from sklearn.decomposition import PCA
 from sklearn.impute import SimpleImputer
 import pickle
 import os
-import boto3
-from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
-app.secret_key = 'supersecretkey'
-
-# AWS S3 Configuration
-S3_BUCKET = 'your-s3-bucket-name'
-S3_KEY = 'your-aws-access-key-id'
-S3_SECRET = 'your-aws-secret-access-key'
-S3_REGION = 'your-s3-region'
+app.secret_key = 'supersecretkey'  # Necessary for flashing messages
 
 # Load the KMeans model from file
 def load_model():
     with open('kmeans_model.pkl', 'rb') as file:
         model = pickle.load(file)
     return model
-
-# Upload file to S3
-def upload_to_s3(file, bucket_name, file_name):
-    s3 = boto3.client(
-        "s3",
-        aws_access_key_id=S3_KEY,
-        aws_secret_access_key=S3_SECRET,
-        region_name=S3_REGION
-    )
-    try:
-        s3.upload_fileobj(file, bucket_name, file_name)
-    except Exception as e:
-        print("Error uploading file to S3:", e)
-        return False
-    return True
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -55,23 +32,8 @@ def index():
             return redirect(request.url)
         
         if file and file.filename.endswith('.csv'):
-            file_name = secure_filename(file.filename)
-            s3_file_path = os.path.join('uploads', file_name)
-            if upload_to_s3(file, S3_BUCKET, s3_file_path):
-                flash('File successfully uploaded to S3')
-            else:
-                flash('Failed to upload file to S3')
-                return redirect(request.url)
-            
             try:
-                s3 = boto3.client(
-                    "s3",
-                    aws_access_key_id=S3_KEY,
-                    aws_secret_access_key=S3_SECRET,
-                    region_name=S3_REGION
-                )
-                obj = s3.get_object(Bucket=S3_BUCKET, Key=s3_file_path)
-                data = pd.read_csv(obj['Body'])
+                data = pd.read_csv(file)
             except Exception as e:
                 flash(f'Error reading CSV file: {e}')
                 return redirect(request.url)
