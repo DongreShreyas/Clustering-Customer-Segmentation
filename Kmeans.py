@@ -80,6 +80,10 @@ def index():
             df_plot = pd.DataFrame(X_pca, columns=['PCA1', 'PCA2'])
             df_plot['Cluster'] = labels
             
+            # Ensure the static directory exists
+            if not os.path.exists('static'):
+                os.makedirs('static')
+            
             # Plot clusters using PCA
             fig, ax = plt.subplots(figsize=(10, 6))
             scatter = ax.scatter(df_plot['PCA1'], df_plot['PCA2'], c=df_plot['Cluster'], cmap='viridis')

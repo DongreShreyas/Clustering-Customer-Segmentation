@@ -2,33 +2,109 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>KMeans Clustering App</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            background-color: #f0f2f5;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card-title {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        .table-container {
+            overflow-x: auto;
+        }
+        .table {
+            width: 100%;
+            margin-top: 20px;
+        }
+        .alert {
+            margin-top: 20px;
+        }
+        .img-fluid {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+    </style>
 </head>
 <body>
-    <h1>KMeans Clustering App</h1>
-    <form action="/" method="post" enctype="multipart/form-data">
-        <input type="file" name="file">
-        <label for="n_clusters">Number of clusters:</label>
-        <input type="number" name="n_clusters" value="2" min="2" max="10">
-        <button type="submit">Upload</button>
-    </form>
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <ul>
-        {% for message in messages %}
-          <li>{{ message }}</li>
-        {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
-    {% if data_preview %}
-        <h2>Data Preview</h2>
-        {{ data_preview | safe }}
-        <h3>Shape of dataset: {{ shape }}</h3>
-        <h3>Silhouette Score for {{ n_clusters }} clusters: {{ silhouette_avg }}</h3>
-        <img src="{{ img_url }}" alt="Cluster Plot">
-        <h3>Cluster Centers</h3>
-        {{ cluster_centers | safe }}
-    {% endif %}
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="card-title text-center">KMeans Clustering App</h1>
+                <form action="/" method="post" enctype="multipart/form-data" class="mb-4">
+                    <div class="form-group">
+                        <label for="file"><i class="fas fa-file-upload"></i> Upload CSV File</label>
+                        <input type="file" name="file" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="n_clusters"><i class="fas fa-clone"></i> Number of Clusters</label>
+                        <input type="number" name="n_clusters" class="form-control" value="2" min="2" max="10" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-upload"></i> Upload</button>
+                </form>
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <div class="alert alert-warning" role="alert">
+                            <ul>
+                                {% for message in messages %}
+                                    <li>{{ message }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                {% endwith %}
+                {% if data_preview %}
+                    <h2>Data Preview</h2>
+                    <div class="table-container mb-4">
+                        {{ data_preview | safe }}
+                    </div>
+                    <h3>Shape of Dataset: {{ shape }}</h3>
+                    <h3>Silhouette Score for {{ n_clusters }} Clusters: {{ silhouette_avg }}</h3>
+                    <img src="{{ img_url }}" alt="Cluster Plot" class="img-fluid mt-4">
+                    <h3 class="mt-4">Cluster Centers</h3>
+                    <div class="table-container">
+                        {{ cluster_centers | safe }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <footer>
+            <p>&copy; 2024 KMeans Clustering App. All Rights Reserved.</p>
+        </footer>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
