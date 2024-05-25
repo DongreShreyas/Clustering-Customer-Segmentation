@@ -9,28 +9,38 @@ from sklearn.decomposition import PCA
 from sklearn.impute import SimpleImputer
 import pickle
 import os
+import boto3
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
-app.secret_key = 'supersecretkey'  # Necessary for flashing messages
+app.secret_key = 'supersecretkey'
 
-# Configure upload folder and allowed extensions
-UPLOAD_FOLDER = 'uploads'
-ALLOWED_EXTENSIONS = {'csv'}
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-# Ensure the upload directory exists
-if not os.path.exists(UPLOAD_FOLDER):
-    os.makedirs(UPLOAD_FOLDER)
-
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+# AWS S3 Configuration
+S3_BUCKET = 'your-s3-bucket-name'
+S3_KEY = 'your-aws-access-key-id'
+S3_SECRET = 'your-aws-secret-access-key'
+S3_REGION = 'your-s3-region'
 
 # Load the KMeans model from file
 def load_model():
     with open('kmeans_model.pkl', 'rb') as file:
         model = pickle.load(file)
     return model
+
+# Upload file to S3
+def upload_to_s3(file, bucket_name, file_name):
+    s3 = boto3.client(
+        "s3",
+        aws_access_key_id=S3_KEY,
+        aws_secret_access_key=S3_SECRET,
+        region_name=S3_REGION
+    )
+    try:
+        s3.upload_fileobj(file, bucket_name, file_name)
+    except Exception as e:
+        print("Error uploading file to S3:", e)
+        return False
+    return True
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -44,14 +54,24 @@ def index():
             flash('No file selected for uploading')
             return redirect(request.url)
         
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            file.save(filepath)
+        if file and file.filename.endswith('.csv'):
+            file_name = secure_filename(file.filename)
+            s3_file_path = os.path.join('uploads', file_name)
+            if upload_to_s3(file, S3_BUCKET, s3_file_path):
+                flash('File successfully uploaded to S3')
+            else:
+                flash('Failed to upload file to S3')
+                return redirect(request.url)
             
             try:
-                data = pd.read_csv(filepath, chunksize=10000)
-                data = pd.concat(data, ignore_index=True)
+                s3 = boto3.client(
+                    "s3",
+                    aws_access_key_id=S3_KEY,
+                    aws_secret_access_key=S3_SECRET,
+                    region_name=S3_REGION
+                )
+                obj = s3.get_object(Bucket=S3_BUCKET, Key=s3_file_path)
+                data = pd.read_csv(obj['Body'])
             except Exception as e:
                 flash(f'Error reading CSV file: {e}')
                 return redirect(request.url)
@@ -97,10 +117,6 @@ def index():
             # Create a DataFrame for plotting
             df_plot = pd.DataFrame(X_pca, columns=['PCA1', 'PCA2'])
             df_plot['Cluster'] = labels
-            
-            # Ensure the static directory exists
-            if not os.path.exists('static'):
-                os.makedirs('static')
             
             # Plot clusters using PCA
             fig, ax = plt.subplots(figsize=(10, 6))
