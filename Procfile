@@ -1,3 +1,3 @@
-web: gunicorn clusteringcustomer:app
+web: gunicorn Kmeans:app
 
 
