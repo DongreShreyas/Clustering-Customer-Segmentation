@@ -80,3 +80,7 @@ Finally, we conclude that there are 7 different type of users in the dataset tha
 7.**Type 7 (Low active user)**: This user represents about 6.5% of the total. This is the low active kind of user, they have the low balance among all types, they make a less of transactions, purchases and payments. They are also the less active users in all kinds of advance payments.
 
 
+# Final Output 
+
+
+![Screenshot 2024-05-20 221537](https://github.com/DongreShreyas/Clustering-Customer-Segmentation/assets/148772101/bb5b8514-c32d-4c07-8261-ffbd2b0fa00f)
