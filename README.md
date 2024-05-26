@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Customer Segmentation In Bank Customers
 
 Customer segmentation involves grouping customers into specific marketing groups, perhaps narrowing them down by gender, interests, buying habits or demographic. The process requires a thought-out strategy, understanding how to manage and group your customers and which data you will use to do this. By differentiating their customer base, businesses can better target individuals and maximize sales, link-sell appropriately and provide more tailored shopping experiences. The aim of this project is to identify patterns followed by users, grouping them with other users with the same characteristics and discover which values of every feature identify that group. To be more specific, we will identify user types in credit card holders' data collected over 6 months.
@@ -73,4 +74,6 @@ Finally, we conclude that there are 7 different type of users in the dataset tha
 5.**Type 5 (Responsible user)**: This is the most common user type (about 10.2% of the total). This type of user usually buys a few items rarely, also is characterized for using the payment in advance services frequently.
 6.**Type 6 (New users)**: This is the least common user type (about 10% of the total). These are low tenured users, they haven't done enough purchases in any way yet, they have low credit limit and low payments. One important fact is that new users tend to pay in advance meanwhile users with longer tenure don't.
 7.**Type 7 (Low active user)**: This user represents about 6.5% of the total. This is the low active kind of user, they have the low balance among all types, they make a less of transactions, purchases and payments. They are also the less active users in all kinds of advance payments.
+=======
+>>>>>>> 07dc50a26dcc9df56d0b1ffaba3c744bc326478e
 
