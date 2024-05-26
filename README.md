@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Customer Segmentation In Bank Customers
 
 Customer segmentation involves grouping customers into specific marketing groups, perhaps narrowing them down by gender, interests, buying habits or demographic. The process requires a thought-out strategy, understanding how to manage and group your customers and which data you will use to do this. By differentiating their customer base, businesses can better target individuals and maximize sales, link-sell appropriately and provide more tailored shopping experiences. The aim of this project is to identify patterns followed by users, grouping them with other users with the same characteristics and discover which values of every feature identify that group. To be more specific, we will identify user types in credit card holders' data collected over 6 months.
@@ -50,18 +49,17 @@ For better understanding, consult the variable description table. Some inference
 
 
 
-Cluster analysis
+# Cluster analysis
 
 Before performing the actual clustering, we will analyze how many clusters there are, in other words, how many user types are present in our dataset. For this project two different techniques were compared and analyzed in order to identify the right number of user types. By the way, there is not a definitive answer of number of clusters, there are multiple right choices according to how specific the user segmentations needs to be. We will try to be as specific as it is reasonable to be, for the number of users' type selection. The implemented techniques were:
 
 Within clusters sum of squares (Elbow method): This technique measures the squared average distance of all the points within a cluster using the euclidean distance between a given point and the centroid to which it is assigned. As the number of clusters increases, it will always decrease the within sum of squares (WCSS). So we can use an large number of clusters in order to get a low value of WCSS but then the clusters will start to loose sense of what they represent. To determine the optimal number of clusters, we have to select the value of k at the “elbow” i.e. the point after which the distortion/inertia start decreasing in a linear fashion.
 
-Cluster implementation
+# Cluster implementation
 
 Once we know the actual number of different type of users we have, the next step is to create every group and identify what characteristics can identify them better and what are the most common values in the feature set for that kind of user. Also, we will label all the user from the dataset using this characteristics. The main goal is to identify every user into its corresponding group according to the features or characteristics they have.
 
-For grouping the user types we implemented the K-Means algorithm. K-Means is one of the most popular "clustering" algorithms. K-means stores 
- centroids that it uses to define clusters. A point is considered to be in a particular cluster if it is closer to that cluster's centroid than any other centroid.K-Means finds the best centroids by alternating between.Assigning data points to clusters based on the current centroids.Choosing centroids (points which are the center of a cluster) based on the current assignment of data points to clusters.
+For grouping the user types we implemented the K-Means algorithm. K-Means is one of the most popular "clustering" algorithms. K-means stores centroids that it uses to define clusters. A point is considered to be in a particular cluster if it is closer to that cluster's centroid than any other centroid.K-Means finds the best centroids by alternating between.Assigning data points to clusters based on the current centroids.Choosing centroids (points which are the center of a cluster) based on the current assignment of data points to clusters.
 
 
 Conclusion
@@ -74,6 +72,5 @@ Finally, we conclude that there are 7 different type of users in the dataset tha
 5.**Type 5 (Responsible user)**: This is the most common user type (about 10.2% of the total). This type of user usually buys a few items rarely, also is characterized for using the payment in advance services frequently.
 6.**Type 6 (New users)**: This is the least common user type (about 10% of the total). These are low tenured users, they haven't done enough purchases in any way yet, they have low credit limit and low payments. One important fact is that new users tend to pay in advance meanwhile users with longer tenure don't.
 7.**Type 7 (Low active user)**: This user represents about 6.5% of the total. This is the low active kind of user, they have the low balance among all types, they make a less of transactions, purchases and payments. They are also the less active users in all kinds of advance payments.
-=======
->>>>>>> 07dc50a26dcc9df56d0b1ffaba3c744bc326478e
+
 
