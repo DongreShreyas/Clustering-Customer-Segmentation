@@ -70,3 +70,4 @@ Finally, we conclude that there are 7 different type of users in the dataset tha
 6.Type 6 (New users): This is the least common user type (about 10% of the total). These are low tenured users, they haven't done enough purchases in any way yet, they have low credit limit and low payments. One important fact is that new users tend to pay in advance meanwhile users with longer tenure don't.
 7.Type 7 (Low active user): This user represents about 6.5% of the total. This is the low active kind of user, they have the low balance among all types, they make a less of transactions, purchases and payments. They are also the less active users in all kinds of advance payments.
 
+"C:\Users\dshre\OneDrive\Pictures\Screenshots\Screenshot 2024-05-20 221537.png"
