@@ -1,3 +1,9 @@
+
+
+https://github.com/DongreShreyas/Clustering-Customer-Segmentation/assets/148772101/4e4d61af-6856-47ec-b289-ddb4f8c8d20d
+
+
+
 # Customer Segmentation In Bank Customers
 
 Customer segmentation involves grouping customers into specific marketing groups, perhaps narrowing them down by gender, interests, buying habits or demographic. The process requires a thought-out strategy, understanding how to manage and group your customers and which data you will use to do this. By differentiating their customer base, businesses can better target individuals and maximize sales, link-sell appropriately and provide more tailored shopping experiences. The aim of this project is to identify patterns followed by users, grouping them with other users with the same characteristics and discover which values of every feature identify that group. To be more specific, we will identify user types in credit card holders' data collected over 6 months.
